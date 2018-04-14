@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="pref_characterKey"
+        android:title="@string/pref_characterTitle"
+        android:entries="@array/pref_character_values"
+        android:entryValues="@array/pref_character_values"
+        android:defaultValue="@string/character_valerian"
+        />
+</PreferenceScreen>

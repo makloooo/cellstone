@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CellStone</string>
+    <string name="pref_characterTitle">Selected Character</string>
+
+    <string name="character_gruh">Gruh</string>
+    <string name="character_polly">Polly</string>
+    <string name="character_toshiie">Toshiie</string>
+    <string name="character_valerian">Valerian</string>
+
+
+</resources>
