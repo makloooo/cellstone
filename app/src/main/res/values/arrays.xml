@@ -6,4 +6,14 @@
         <item>@string/character_toshiie</item>
         <item>@string/character_valerian</item>
     </string-array>
+
+    <string-array name="faction_names">
+        <item>@string/faction_adventurers</item>
+        <item>@string/faction_leclair</item>
+        <item>@string/faction_earth</item>
+        <item>@string/faction_water</item>
+        <item>@string/faction_air</item>
+        <item>@string/faction_fire</item>
+        <item>@string/faction_misc</item>
+    </string-array>
 </resources>

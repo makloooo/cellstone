@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FragmentHomeScreen">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- CharacterClass Portrait -->
+        <ImageView
+            android:id="@+id/character_portrait"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:paddingTop="@dimen/main_menuItem_padding" />
+        <!-- Scrolling list on the right -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_weight="5" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- CharacterClass Portrait -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5" />
+        <!-- Scrolling list on the right -->
+        <ListView
+            android:id="@+id/faction_list_listView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:divider="@android:color/transparent"
+            android:background="@android:color/transparent"
+            android:layout_weight="7" />
+    </LinearLayout>
+</FrameLayout>

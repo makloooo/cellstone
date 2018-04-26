@@ -7,5 +7,15 @@
     <string name="character_toshiie">Toshiie</string>
     <string name="character_valerian">Valerian</string>
 
+    <!-- Faction Names subject to change as we progress -->
+    <string name="faction_adventurers">Adventurers</string> <!-- tbd -->
+    <string name="faction_leclair">le Clair Group</string>
+    <string name="faction_earth">Earthen Templars</string>
+    <string name="faction_water">Blood of Amat</string>
+    <string name="faction_air">FeatherGale Society</string>
+    <string name="faction_fire">Fire Cult</string>
+    <string name="faction_misc">Miscellaneous</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
