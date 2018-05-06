@@ -16,4 +16,11 @@
         <item>@string/faction_fire</item>
         <item>@string/faction_misc</item>
     </string-array>
+
+    <string-array name="adventurer_names">
+        <item>@string/character_gruh</item>
+        <item>@string/character_polly</item>
+        <item>@string/character_toshiie</item>
+        <item>@string/character_valerian</item>
+    </string-array>
 </resources>

@@ -2,66 +2,77 @@ package makloooo.cellstone;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FragmentHomeScreen.OnHomeScreenInteractionListener} interface
+ * {@link HomeScreenFragment.OnHomeScreenInteractionListener} interface
  * to handle interaction events.
- * Use the {@link FragmentHomeScreen#newInstance} factory method to
+ * Use the {@link HomeScreenFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentHomeScreen extends Fragment {
+public class HomeScreenFragment extends Fragment {
 
-    private static final String TAG = "FragmentHomeScreen";
+    private static final String TAG = "HomeScreenFragment";
+
+    private static final String FACTION_NAMES  = "FactionNames";
 
     private OnHomeScreenInteractionListener mListener;
 
+    ArrayList<String> mFactionList;
     ImageView mCharacterPortrait;
     View mContainer;
 
-    public FragmentHomeScreen() {
+    public HomeScreenFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentHomeScreen.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentHomeScreen newInstance(String param1, String param2) {
-        FragmentHomeScreen fragment = new FragmentHomeScreen();
+    /** Creates a new fragment via factory method.
+     *  Arguments are passed into this method, and stored in a bundle.
+     *  These bundles are then restored on the onCreate method, storing
+     *  them into actual member variables when created. */
+    public static HomeScreenFragment newInstance(ArrayList<String> factionNames) {
+        HomeScreenFragment fragment = new HomeScreenFragment();
+        Bundle args = new Bundle();
+        args.putStringArrayList(FACTION_NAMES, factionNames);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mFactionList = getArguments().getStringArrayList(FACTION_NAMES);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d(TAG, "Create View");
         // populate list
         View view = inflater.inflate(R.layout.fragment_home_screen, container, false);
 
         ListView factionList = view.findViewById(R.id.faction_list_listView);
-        String[] factionArray = getResources().getStringArray(R.array.faction_names);
-        factionList.setAdapter(new AdapterFactionMenu(getActivity(), factionArray));
+        //String[] factionArray = getResources().getStringArray(R.array.faction_names);
+        factionList.setAdapter(new HomeScreenAdapter(getActivity(), mFactionList));
+        factionList.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onButtonPressed(position);
+            }
+        });
 
         mCharacterPortrait = view.findViewById(R.id.character_portrait);
 
@@ -72,7 +83,6 @@ public class FragmentHomeScreen extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(int position) {
         if (mListener != null) {
             mListener.onFactionSelected(position);
@@ -86,7 +96,7 @@ public class FragmentHomeScreen extends Fragment {
             mListener = (OnHomeScreenInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnHomeScreenInteractionListener");
         }
     }
 
@@ -107,7 +117,6 @@ public class FragmentHomeScreen extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnHomeScreenInteractionListener {
-        // TODO: Update argument type and name
         public void onFactionSelected(int position);
     }
 }

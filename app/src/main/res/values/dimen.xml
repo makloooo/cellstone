@@ -4,7 +4,7 @@
     <dimen name="character_bar_outline_width">1dp</dimen>
 
     <dimen name="main_menuItem_padding">6dp</dimen>
-    <dimen name="main_menuItem_height">96dp</dimen>
+    <dimen name="main_menuItem_height">80dp</dimen>
     <dimen name="main_menuItem_textSize">24sp</dimen>
 
     <dimen name="faction_matrix_header_height">64dp</dimen>
