@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 //@Entity(tableName = "characters")
 public class Character {
@@ -30,6 +32,5 @@ public class Character {
     public String getName() { return name; }
     public int getPortraitId() { return portraitId; }
     public String getBio() { return bio; }
-
 }
 

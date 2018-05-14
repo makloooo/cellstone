@@ -24,7 +24,7 @@ public class FactionMatrixAdapter extends ArrayAdapter<String> {
         LayoutInflater layoutInflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View characterEntry = layoutInflater.inflate(
-                R.layout.menuitem_home_screen, parent, false);
+                R.layout.menuitem_faction_matrix, parent, false);
 
         TextView characterEntryText = characterEntry.findViewById(R.id.faction_list_item_text);
         characterEntryText.setText(members.get(position));

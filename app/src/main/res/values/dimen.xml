@@ -9,5 +9,5 @@
 
     <dimen name="faction_matrix_header_height">64dp</dimen>
     <dimen name="faction_matrix_list_margin">32dp</dimen>
-    <dimen name="faction_matrix_list_menuItem_height">8dp</dimen>
+    <dimen name="faction_matrix_list_menuItem_height">60dp</dimen>
 </resources>

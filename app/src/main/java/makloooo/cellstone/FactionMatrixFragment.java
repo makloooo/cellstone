@@ -1,24 +1,34 @@
 package makloooo.cellstone;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.ArrayList;
+
+import jp.wasabeef.glide.transformations.CropTransformation;
+import jp.wasabeef.glide.transformations.CropTransformation.CropType;
 
 public class FactionMatrixFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ROSTER = "FactionRoster";
+    private static final String LAST_SELECTED = "LastSelectedCharacter";
+    private static final String TAG = "FactionMatrixFragment";
 
+    private int mSelectIndex;
     private ImageView mPortrait;
 
     private OnMatrixInteractionListener mListener;
@@ -33,6 +43,7 @@ public class FactionMatrixFragment extends Fragment {
         FactionMatrixFragment fragment = new FactionMatrixFragment();
         Bundle args = new Bundle();
         args.putStringArrayList(ROSTER, factionRoster);
+        args.putInt(LAST_SELECTED, -1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,6 +54,7 @@ public class FactionMatrixFragment extends Fragment {
         if (getArguments() != null) {
             // load faction data depending on string
             mRoster = getArguments().getStringArrayList(ROSTER);
+            mSelectIndex = getArguments().getInt(LAST_SELECTED);
         }
     }
 
@@ -54,7 +66,8 @@ public class FactionMatrixFragment extends Fragment {
                 container, false);
 
         // inflate the left faction matrix
-        ListView factionMatrix = view.findViewById(R.id.faction_matrix_list);
+        final ListView factionMatrix = view.findViewById(R.id.faction_matrix_list);
+        factionMatrix.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
         mPortrait = view.findViewById(R.id.faction_member_portrait);
 
@@ -63,10 +76,7 @@ public class FactionMatrixFragment extends Fragment {
         factionMatrix.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!view.isFocused()) {
-                    onButtonPressed(position); // "focus" character
-                    view.requestFocus();
-                }
+                if (mSelectIndex != position) onButtonPressed(position); // "focus" character
                 else onButtonDoublePressed(position); // select character
             }
         });
@@ -82,12 +92,20 @@ public class FactionMatrixFragment extends Fragment {
 
     // Focus and change portrait
     public int onButtonPressed(int position) {
+        Log.d(TAG, "Single Tap on " + position);
+        mSelectIndex = position;
         if (mListener != null) {
             int resId = mListener.fetchPortrait(position);
             // TODO: Transition fade out old, fade out in
-            new LoadMainPortraitRunnable(mPortrait,
-                    onButtonPressed(0),
-                    this);
+            RequestOptions options = new RequestOptions();
+            options.transforms(new CropTransformation(
+                    mPortrait.getWidth(),
+                    mPortrait.getHeight() - mPortrait.getPaddingTop(),
+                    CropType.TOP));
+            Glide.with(this)
+                    .load(resId)
+                    .apply(options)
+                    .into(mPortrait);
             return resId;
         }
         return 0;
@@ -95,6 +113,7 @@ public class FactionMatrixFragment extends Fragment {
 
     // Go into character profile
     public void onButtonDoublePressed(int position) {
+        Log.d(TAG, "Double Tap on " + position);
         if (mListener != null) {
             mListener.onCharacterSelected(position);
         }

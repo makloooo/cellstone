@@ -1,17 +1,26 @@
 package makloooo.cellstone;
 
 import android.content.res.Resources;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
+import jp.wasabeef.glide.transformations.CropTransformation;
+import jp.wasabeef.glide.transformations.CropTransformation.CropType;
+
 public class MainActivity extends AppCompatActivity
     implements HomeScreenFragment.OnHomeScreenInteractionListener,
-               FactionMatrixFragment.OnMatrixInteractionListener{
+               FactionMatrixFragment.OnMatrixInteractionListener,
+               CharacterProfileFragment.OnProfileInteractionListener {
 
     ArrayList<Faction> mFactionList;
     Faction mCurrentFaction;
@@ -24,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        // TODO: Interface this with a Database later
         loadData();
 
         //SharedPreferences sharedPref = this.getSharedPreferences(
@@ -39,6 +49,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.commit();
     }
 
+    /* Home Screen Fragment Interactions */
     public void onFactionSelected(int position) {
         // get the faction at that position
         mCurrentFaction = mFactionList.get(position);
@@ -48,10 +59,15 @@ public class MainActivity extends AppCompatActivity
         FactionMatrixFragment factionMatrix = FactionMatrixFragment
                 .newInstance(mCurrentFaction.getCharacterNames());
         fragmentTransaction.replace(R.id.main_container, factionMatrix);
+        fragmentTransaction.addToBackStack("HomeScreen");
+        /*
+
+         */
         fragmentTransaction.commit();
         // start faction matrix fragment passing relative faction info as args
     }
 
+    /* Faction Matrix Fragment Interactions */
     public int fetchPortrait(int position) {
         return mCurrentFaction.getCharacter(position).getPortraitId();
     }
@@ -60,6 +76,30 @@ public class MainActivity extends AppCompatActivity
         mCurrentCharacter = mCurrentFaction.getCharacter(position);
         Toast.makeText(this, "Selected character #" + position, Toast.LENGTH_SHORT)
             .show();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        CharacterProfileFragment characterProfile = CharacterProfileFragment
+                .newInstance();
+        fragmentTransaction.replace(R.id.main_container, characterProfile);
+        fragmentTransaction.addToBackStack("CharacterProfile");
+        fragmentTransaction.commit();
+    }
+
+    /* Character Profile Fragment Interactions */
+    public Character fetchCharacter() {
+        return mCurrentCharacter;
+    }
+
+    /* Activity Data Management */
+    public void loadPortrait(Fragment fragment, ImageView imageView, int resId) {
+        RequestOptions options = new RequestOptions();
+        options.transforms(new CropTransformation(
+                imageView.getWidth(),
+                imageView.getHeight() - imageView.getPaddingTop(),
+                CropType.TOP));
+        Glide.with(fragment)
+                .load(resId)
+                .apply(options)
+                .into(imageView);
     }
 
     protected void characterSelect() {
@@ -111,9 +151,9 @@ public class MainActivity extends AppCompatActivity
                 R.drawable.sample_karna,
                 "Another Sun Boy"));
         mFactionList.get(1).addCharacter(new Character(
-                "Stop showing me Gawain",
-                R.drawable.sample_gawain,
-                "Our Monkey Knight of the Sun"));
+                "Also a BB",
+                R.drawable.sample_bb,
+                "Scary AI"));
 
         mFactionList.add(new Faction("Please no more Gawains"));
         mFactionList.get(2).addCharacter(new Character(

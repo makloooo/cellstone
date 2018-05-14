@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="@dimen/faction_matrix_list_menuItem_height"
+    android:layout_width="match_parent"
+    android:padding="@dimen/main_menuItem_padding" >
+    <TextView
+        android:id="@+id/faction_list_item_text"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:text="Character Name"
+        android:gravity="center"
+        android:background="@drawable/menuitem_shape"
+        android:textSize="@dimen/main_menuItem_textSize">
+    </TextView>
+</RelativeLayout>

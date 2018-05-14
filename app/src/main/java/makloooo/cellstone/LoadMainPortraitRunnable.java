@@ -22,6 +22,7 @@ public class LoadMainPortraitRunnable implements Runnable {
 
     @Override
     public void run() {
+        // TODO: DM control - image balancing
         RequestOptions options = new RequestOptions();
         options.transforms(new CropTransformation(
                 mImageView.getWidth(),
