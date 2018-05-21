@@ -69,7 +69,7 @@ public class FactionMatrixFragment extends Fragment {
         final ListView factionMatrix = view.findViewById(R.id.faction_matrix_list);
         factionMatrix.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
-        mPortrait = view.findViewById(R.id.faction_member_portrait);
+        // mPortrait = view.findViewById(R.id.faction_member_portrait);
 
         //String[] memberArray = getResources().getStringArray(R.array.adventurer_names);
         factionMatrix.setAdapter(new FactionMatrixAdapter(getActivity(), mRoster));
@@ -81,11 +81,9 @@ public class FactionMatrixFragment extends Fragment {
             }
         });
 
-        // load the first character's portrait
+        /* load the first character's portrait */
         // TODO: make it load the last character selected portrait using bundle, default 0
-        view.post(new LoadMainPortraitRunnable(mPortrait,
-                onButtonPressed(0),
-                this));
+        onButtonPressed(0);
 
         return view;
     }
@@ -96,17 +94,7 @@ public class FactionMatrixFragment extends Fragment {
         mSelectIndex = position;
         if (mListener != null) {
             int resId = mListener.fetchPortrait(position);
-            // TODO: Transition fade out old, fade out in
-            RequestOptions options = new RequestOptions();
-            options.transforms(new CropTransformation(
-                    mPortrait.getWidth(),
-                    mPortrait.getHeight() - mPortrait.getPaddingTop(),
-                    CropType.TOP));
-            Glide.with(this)
-                    .load(resId)
-                    .apply(options)
-                    .into(mPortrait);
-            return resId;
+            mListener.loadImage(resId);
         }
         return 0;
     }
@@ -139,5 +127,6 @@ public class FactionMatrixFragment extends Fragment {
     public interface OnMatrixInteractionListener {
         void onCharacterSelected(int position);
         int fetchPortrait(int position); // returns resId
+        void loadImage(int resId);
     }
 }

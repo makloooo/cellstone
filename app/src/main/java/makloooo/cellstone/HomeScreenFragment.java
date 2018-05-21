@@ -27,11 +27,12 @@ public class HomeScreenFragment extends Fragment {
     private static final String TAG = "HomeScreenFragment";
 
     private static final String FACTION_NAMES  = "FactionNames";
+    private static final String USER_RESID  = "UserPortraitResID";
 
     private OnHomeScreenInteractionListener mListener;
+    private int mCurrentUserResId;
 
     ArrayList<String> mFactionList;
-    ImageView mCharacterPortrait;
     View mContainer;
 
     public HomeScreenFragment() {
@@ -42,10 +43,11 @@ public class HomeScreenFragment extends Fragment {
      *  Arguments are passed into this method, and stored in a bundle.
      *  These bundles are then restored on the onCreate method, storing
      *  them into actual member variables when created. */
-    public static HomeScreenFragment newInstance(ArrayList<String> factionNames) {
+    public static HomeScreenFragment newInstance(ArrayList<String> factionNames, int resId) {
         HomeScreenFragment fragment = new HomeScreenFragment();
         Bundle args = new Bundle();
         args.putStringArrayList(FACTION_NAMES, factionNames);
+        args.putInt(USER_RESID, resId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,6 +57,7 @@ public class HomeScreenFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mFactionList = getArguments().getStringArrayList(FACTION_NAMES);
+            mCurrentUserResId = getArguments().getInt(USER_RESID);
         }
     }
 
@@ -74,11 +77,7 @@ public class HomeScreenFragment extends Fragment {
             }
         });
 
-        mCharacterPortrait = view.findViewById(R.id.character_portrait);
-
-        view.post(new LoadMainPortraitRunnable(mCharacterPortrait,
-                R.drawable.sample_gawain,
-                this));
+        mListener.loadImage(mCurrentUserResId);
 
         return view;
     }
@@ -118,5 +117,6 @@ public class HomeScreenFragment extends Fragment {
      */
     public interface OnHomeScreenInteractionListener {
         public void onFactionSelected(int position);
+        public void loadImage(int resId);
     }
 }

@@ -4,22 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FactionMatrixFragment">
-    <!-- Member Portrait -->
+    <!-- Member Portrait
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@android:color/transparent" >
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
         <ImageView
             android:id="@+id/faction_member_portrait"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1" />
-    </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout> -->
     <!-- Faction Matrix Header -->
     <ImageView
         android:id="@+id/faction_matrix_header"
@@ -32,15 +32,15 @@
         android:orientation="horizontal"
         android:background="@android:color/transparent"
         android:paddingTop="@dimen/faction_matrix_header_height">
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3" />
         <ListView
             android:id="@+id/faction_matrix_list"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:divider="@android:color/transparent"
             android:layout_weight="4" />
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3" />
     </LinearLayout>
 </FrameLayout>

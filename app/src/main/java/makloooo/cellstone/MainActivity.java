@@ -1,7 +1,5 @@
 package makloooo.cellstone;
 
-import android.content.res.Resources;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,19 +12,21 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
-import jp.wasabeef.glide.transformations.CropTransformation;
-import jp.wasabeef.glide.transformations.CropTransformation.CropType;
-
 public class MainActivity extends AppCompatActivity
     implements HomeScreenFragment.OnHomeScreenInteractionListener,
                FactionMatrixFragment.OnMatrixInteractionListener,
-               CharacterProfileFragment.OnProfileInteractionListener {
+               CharacterPagerFragment.OnProfileInteractionListener,
+               ImageDisplayFragment.OnImageInteractionListener {
 
     ArrayList<Faction> mFactionList;
     Faction mCurrentFaction;
     Character mCurrentCharacter;
 
+    int mUserCharacterId;
+
     FragmentManager mFragmentManager;
+
+    ImageDisplayFragment mImageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +36,30 @@ public class MainActivity extends AppCompatActivity
         // TODO: Interface this with a Database later
         loadData();
 
+        // TODO: Set this to an initialization fragment upon startup
+        // TODO: if it hasn't been set yet
+        characterSelect();
+
+        // loading a bg, currently a stock photo
+        ImageView bg = findViewById(R.id.background);
+        Glide.with(this)
+                .load(R.drawable.bg)
+                .apply(RequestOptions.centerCropTransform())
+                .into(bg);
+
         //SharedPreferences sharedPref = this.getSharedPreferences(
         //    getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         mFragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
 
+        mImageFragment = ImageDisplayFragment
+                .newInstance(mUserCharacterId);
+
         // Build an array list of faction names to pass in, since that's all the fragment
         // really needs
-        HomeScreenFragment homeScreen = HomeScreenFragment.newInstance(getFactionNames());
+        HomeScreenFragment homeScreen = HomeScreenFragment.newInstance(getFactionNames(), mUserCharacterId);
 
+        fragmentTransaction.add(R.id.main_container, mImageFragment);
         fragmentTransaction.add(R.id.main_container, homeScreen);
         fragmentTransaction.commit();
     }
@@ -58,11 +73,12 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         FactionMatrixFragment factionMatrix = FactionMatrixFragment
                 .newInstance(mCurrentFaction.getCharacterNames());
-        fragmentTransaction.replace(R.id.main_container, factionMatrix);
-        fragmentTransaction.addToBackStack("HomeScreen");
-        /*
 
-         */
+        // TODO: Reduce these two lines to something more elegant
+        fragmentTransaction.replace(R.id.main_container, mImageFragment);
+        fragmentTransaction.add(R.id.main_container, factionMatrix);
+
+        fragmentTransaction.addToBackStack("HomeScreen");
         fragmentTransaction.commit();
         // start faction matrix fragment passing relative faction info as args
     }
@@ -77,9 +93,13 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(this, "Selected character #" + position, Toast.LENGTH_SHORT)
             .show();
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-        CharacterProfileFragment characterProfile = CharacterProfileFragment
+        CharacterPagerFragment characterProfile = CharacterPagerFragment
                 .newInstance();
-        fragmentTransaction.replace(R.id.main_container, characterProfile);
+
+        // TODO: Reduce these two lines to something more elegant
+        fragmentTransaction.replace(R.id.main_container, mImageFragment);
+        fragmentTransaction.add(R.id.main_container, characterProfile);
+
         fragmentTransaction.addToBackStack("CharacterProfile");
         fragmentTransaction.commit();
     }
@@ -89,19 +109,11 @@ public class MainActivity extends AppCompatActivity
         return mCurrentCharacter;
     }
 
-    /* Activity Data Management */
-    public void loadPortrait(Fragment fragment, ImageView imageView, int resId) {
-        RequestOptions options = new RequestOptions();
-        options.transforms(new CropTransformation(
-                imageView.getWidth(),
-                imageView.getHeight() - imageView.getPaddingTop(),
-                CropType.TOP));
-        Glide.with(fragment)
-                .load(resId)
-                .apply(options)
-                .into(imageView);
+    public FragmentManager fetchFragmentManager() {
+        return mFragmentManager;
     }
 
+    /* Activity Data Management */
     protected void characterSelect() {
         // start character select activity
 
@@ -113,6 +125,8 @@ public class MainActivity extends AppCompatActivity
         // blue for valerian
         // set theme
         // save to preferences
+
+        mUserCharacterId = R.drawable.sample_tamamo;
     }
 
     private ArrayList<String> getFactionNames() {
@@ -146,14 +160,18 @@ public class MainActivity extends AppCompatActivity
                 "Still Gawain",
                 R.drawable.sample_gawain,
                 "Our Gorilla Knight of the Sun"));
+        loadGawain();
         mFactionList.get(1).addCharacter(new Character(
                 "A Surprise Karna",
                 R.drawable.sample_karna,
                 "Another Sun Boy"));
+        mFactionList.get(1).getCharacter(1).addLoreEntry("Hohohoho","he");
+
         mFactionList.get(1).addCharacter(new Character(
                 "Also a BB",
                 R.drawable.sample_bb,
                 "Scary AI"));
+        mFactionList.get(1).getCharacter(2).addLoreEntry("Hahahaha", "ha");
 
         mFactionList.add(new Faction("Please no more Gawains"));
         mFactionList.get(2).addCharacter(new Character(
@@ -168,5 +186,27 @@ public class MainActivity extends AppCompatActivity
                 "Stop showing me Gawain",
                 R.drawable.sample_gawain,
                 "Our Monkey Knight of the Sun"));
+    }
+
+    protected void loadGawain() {
+        mFactionList.get(1).getCharacter(0)
+                .addLoreEntry(
+                        "01 - Excalibur Galatine: The Resurrected Sword of Victory",
+                        "The sword of Sir Gawain and the sister sword to Excalibur. It is said that like Excalibur, Galatine once belonged to the Lady of the Lake. However, its legend have been overshadowed by its more famous counterpart, and therefore very few people know of its true significance.\n" +
+                                "\n" +
+                                "Another difference is the while Excalibur was said to absorb light radiated from the Earth, Galatine reflected the warming rays of the Sun.");
+        mFactionList.get(1).getCharacter(0)
+                .addLoreEntry("02 - Knight of the Sun",
+                        "While King Arthur was ruled by the movement of Artemis, the goddess of the moon, Sir Gawain drew his strength as a knight from the sun.\n" +
+                                "It is said that his powers are at their greatest when the sun is at its zenith.");
+        mFactionList.get(1).getCharacter(0)
+                .addLoreEntry("03 - Excalibur",
+                        "Arthur, said to be the mightiest of all the kings to rule Britain, is believed to have ruled sometime in the fifth or sixth century.\n" +
+                                "\n" +
+                                "The sword that is said to have proclaimed his rule was bestowed upon him by the Elemental known in legends as the Lady of the Lake. The entire episode was passed in the stories collectively known as \"King Arthur and the Knights of the Round Table.\" ");
+    }
+
+    public void loadImage(int resId) {
+        mImageFragment.changePortrait(resId);
     }
 }

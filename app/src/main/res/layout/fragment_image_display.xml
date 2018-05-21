@@ -12,16 +12,16 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:background="@android:color/transparent" >
+        <ImageView
+            android:id="@+id/main_image_display"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
         <View
             android:id="@+id/image_display_spacing"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"/>
-        <ImageView
-            android:id="@+id/faction_member_portrait"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
     </LinearLayout>
 
 </FrameLayout>
