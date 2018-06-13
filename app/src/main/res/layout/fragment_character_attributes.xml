@@ -1,15 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".CharacterAttributesFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/holo_green_light"
-        android:text="@string/hello_blank_fragment" />
+    <!-- Name -->
+    <include layout="@layout/character_attribute_entry"
+        android:id="@+id/characterAttribute_name" />
 
-</FrameLayout>
+    <!-- Title -->
+    <include layout="@layout/character_attribute_entry"
+        android:id="@+id/characterAttribute_title" />
+
+    <!-- Height/Weight -->
+    <include layout="@layout/character_attribute_entry"
+        android:id="@+id/characterAttribute_heightWeight" />
+
+    <include layout="@layout/character_attribute_entry"
+        android:id="@+id/characterAttribute_raceSpecialization" />
+
+    <include layout="@layout/character_attribute_entry"
+        android:id="@+id/characterAttribute_misc" />
+
+    <include layout="@layout/character_attribute_stat_display"
+        android:id="@+id/characterAttribute_stats" />
+
+    <include layout="@layout/character_attribute_entry"
+        android:id="@+id/characterAttribute_notes" />
+
+</LinearLayout>

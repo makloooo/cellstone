@@ -16,6 +16,8 @@ public class CharacterLoreFragment extends Fragment {
     private static final String LORE_TITLES = "Entry Titles";
     private static final String LORE_MATERIAL = "Entry Material";
 
+    public OnEntrySelectedListener mListener;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -49,6 +51,7 @@ public class CharacterLoreFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(
                     new CharacterLoreAdapter(
+                            mListener,
                             getArguments().getStringArrayList(LORE_TITLES),
                             getArguments().getStringArrayList(LORE_MATERIAL)));
         }
@@ -59,17 +62,21 @@ public class CharacterLoreFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnEntrySelectedListener) {
+            mListener = (OnEntrySelectedListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
-        }*/
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        //mListener = null;
+        mListener = null;
+    }
+
+    public interface OnEntrySelectedListener {
+        void displayMaterial(String title, String material);
     }
 }

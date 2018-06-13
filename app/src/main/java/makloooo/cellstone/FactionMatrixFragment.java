@@ -29,7 +29,6 @@ public class FactionMatrixFragment extends Fragment {
     private static final String TAG = "FactionMatrixFragment";
 
     private int mSelectIndex;
-    private ImageView mPortrait;
 
     private OnMatrixInteractionListener mListener;
 

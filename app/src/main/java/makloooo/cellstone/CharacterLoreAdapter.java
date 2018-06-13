@@ -1,5 +1,6 @@
 package makloooo.cellstone;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils.TruncateAt;
 import android.util.Log;
@@ -10,15 +11,23 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import makloooo.cellstone.CharacterLoreFragment.OnEntrySelectedListener;
+import makloooo.cellstone.CharacterPagerFragment.OnProfileInteractionListener;
+
 public class CharacterLoreAdapter extends RecyclerView.Adapter<CharacterLoreAdapter.ViewHolder> {
 
     private static final String TAG = "CharacterLoreAdapter";
+
+    private OnEntrySelectedListener mListener;
 
     // These are pairs
     private final ArrayList<String> mTitles;
     private final ArrayList<String> mMaterial;
 
-    CharacterLoreAdapter(ArrayList<String> titles, ArrayList<String> material) {
+    CharacterLoreAdapter(OnEntrySelectedListener listener,
+                         ArrayList<String> titles, ArrayList<String> material) {
+        mListener = listener;
+
         mTitles = titles;
         mMaterial = material;
     }
@@ -49,12 +58,8 @@ public class CharacterLoreAdapter extends RecyclerView.Adapter<CharacterLoreAdap
             @Override
             public void onClick(View v) {
                 // TODO: Dim screen, display entire material over it
-                /* I propose, we simply have a view that is gone at first
-                 * in this activity, and update it with the material text
-                 * before setting it to visible. The view have a fade in
-                 * transition after updating. Once it is loaded in, it will
-                 * be scrollable, and when tapped, it will transition fade
-                 * out. Once animation is done, it will be set to gone again. */
+                int i = holder.getAdapterPosition();
+                mListener.displayMaterial(mTitles.get(i), mMaterial.get(i));
             }
         });
     }
@@ -62,14 +67,6 @@ public class CharacterLoreAdapter extends RecyclerView.Adapter<CharacterLoreAdap
     @Override
     public int getItemCount() {
         return mTitles.size();
-    }
-
-    private int calculateMaxLength(ViewHolder holder) {
-        Log.d(TAG, "holder.mView.getWidth() = " + holder.mView.getWidth());
-        Log.d(TAG, "holder.mPreview.getTextSize() = " + holder.mPreview.getTextSize());
-        Log.d(TAG, "result = " + holder.mView.getWidth()/holder.mPreview.getTextSize());
-
-        return (int)(holder.mView.getWidth()/holder.mPreview.getTextSize());
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

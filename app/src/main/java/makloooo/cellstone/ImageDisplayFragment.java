@@ -1,5 +1,8 @@
 package makloooo.cellstone;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,10 +10,16 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 
 import jp.wasabeef.glide.transformations.CropTransformation;
@@ -34,6 +43,7 @@ public class ImageDisplayFragment extends Fragment {
     private ImageView mImageView;
 
     private OnImageInteractionListener mListener;
+    private ObjectAnimator mSigilAnimator;
 
     public ImageDisplayFragment() {
         // Required empty public constructor
@@ -65,9 +75,24 @@ public class ImageDisplayFragment extends Fragment {
 
         mImageView = view.findViewById(R.id.main_image_display);
 
-        view.post(new LoadMainPortraitRunnable(mImageView,
+        /*view.post(new LoadMainPortraitRunnable(mImageView,
                 mResId,
-                this));
+                this));*/
+
+        // Setting up rotation animator
+        ObjectAnimator objectAnimator = ObjectAnimator
+                .ofFloat(mImageView, "rotationY", 0, 360);
+        objectAnimator.setDuration(8000);
+        objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        objectAnimator.setInterpolator(new LinearInterpolator());
+        mSigilAnimator = objectAnimator;
+
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                loadSigil();
+            }
+        });
 
         return view;
     }
@@ -89,16 +114,6 @@ public class ImageDisplayFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnImageInteractionListener {
         // TODO: Update argument type and name
         // void onFragmentInteraction(Uri uri);
@@ -106,7 +121,23 @@ public class ImageDisplayFragment extends Fragment {
 
     public void changePortrait(int resId) {
         mResId = resId;
-        loadPortrait();
+        if (resId == R.drawable.sample_sigil) loadSigil();
+        else loadPortrait();
+    }
+
+    public void loadSigil() {
+
+        // Loading in Sigil Image
+        Glide.with(this)
+                .load(R.drawable.sample_sigil)
+                .apply(RequestOptions.centerInsideTransform())
+                .into(mImageView);
+
+        // scaling the sigil
+        mImageView.setScaleX(0.75f);
+        mImageView.setScaleY(0.75f);
+
+        mSigilAnimator.start();
     }
 
     public void loadPortrait() {
@@ -119,5 +150,10 @@ public class ImageDisplayFragment extends Fragment {
                 .load(mResId)
                 .apply(options)
                 .into(mImageView);
+
+        mImageView.setScaleX(1f);
+        mImageView.setScaleY(1f);
+
+        mSigilAnimator.end();
     }
 }

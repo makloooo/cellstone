@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CharacterSpeculationFragment">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menuitem_shape">
+            <TextView
+                android:id="@+id/characterSpeculations_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/characterSpeculation_textPadding"
+                android:text="Virgil's Corner: " />
+            <View
+                android:id="@+id/characterSpeculations_indentation"
+                android:layout_width="@dimen/characterSpeculation_indent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/characterSpeculations_header" />
+            <LinearLayout
+                android:id="@+id/characterSpeculations_entries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/characterAttributes_textPadding"
+                android:layout_below="@id/characterSpeculations_header"
+                android:layout_toEndOf="@id/characterSpeculations_indentation"
+                android:orientation="vertical"/>
+        </RelativeLayout>
+    </ScrollView>
+
+</FrameLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MaterialDisplayFragment">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.75"
+        android:background="@android:color/black" />
+
+    <ScrollView
+        android:id="@+id/materialDisplay_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/materiaDisplay_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="18dp"
+            android:text="Sample Text"
+            android:textColor="@android:color/white" />
+    </ScrollView>
+
+    <!--<ImageButton
+        android:id="@+id/materialDisplay_backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.5" android:scaleY="1.5"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:background="@drawable/menuitem_shape"
+        android:src="@drawable/ic_play_arrow_black_24dp"/>-->
+
+</FrameLayout>

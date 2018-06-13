@@ -77,7 +77,8 @@ public class HomeScreenFragment extends Fragment {
             }
         });
 
-        mListener.loadImage(mCurrentUserResId);
+        //mListener.loadImage(mCurrentUserResId);
+        mListener.loadImage(R.drawable.sample_sigil);
 
         return view;
     }

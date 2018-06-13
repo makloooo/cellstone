@@ -11,5 +11,12 @@
     <dimen name="faction_matrix_list_margin">32dp</dimen>
     <dimen name="faction_matrix_list_menuItem_height">60dp</dimen>
 
+    <dimen name="characterAttributes_textPadding">4dp</dimen>
+    <dimen name="characterAttributes_stat_textPadding">4dp</dimen>
+    <dimen name="characterAttributes_stat_textSize">12sp</dimen>
+
+    <dimen name="characterSpeculation_textPadding">12dp</dimen>
+    <dimen name="characterSpeculation_indent">60dp</dimen>
+
     <dimen name="call_button_dimen">48dp</dimen>
 </resources>

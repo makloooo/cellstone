@@ -8,29 +8,29 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.HashMap;
 
 public class CharacterAttributesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    //private static final String ARG_PARAM1 = "param1";
-    //private static final String ARG_PARAM2 = "param2";
     private static final String ATTRIBUTES = "Character Attributes";
+    private static final String STATS = "Character Stats";
 
-    // TODO: Rename and change types of parameters
     private HashMap<String, String> mAttributes;
+    private HashMap<String, String> mStats;
 
     public CharacterAttributesFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static CharacterAttributesFragment newInstance(HashMap<String, String> attr) {
+    public static CharacterAttributesFragment newInstance(HashMap<String, String> attr, HashMap<String, String> stats) {
         Log.d("CharacterAttributesFragment", "created new CharacterAttributesFragment");
         CharacterAttributesFragment fragment = new CharacterAttributesFragment();
         Bundle args = new Bundle();
         args.putSerializable(ATTRIBUTES, attr);
+        args.putSerializable(STATS, stats);
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,6 +40,7 @@ public class CharacterAttributesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mAttributes = (HashMap)getArguments().getSerializable(ATTRIBUTES);
+            mStats = (HashMap)getArguments().getSerializable(STATS);
         }
     }
 
@@ -47,7 +48,50 @@ public class CharacterAttributesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_character_attributes, container, false);
+        View view = inflater.inflate(R.layout.fragment_character_attributes, container, false);
+
+        // Setting attribute info
+        int resIds[] = {R.id.characterAttribute_name, R.id.characterAttribute_title,
+                        R.id.characterAttribute_heightWeight,
+                        R.id.characterAttribute_raceSpecialization,
+                        R.id.characterAttribute_misc, R.id.characterAttribute_stats,
+                        R.id.characterAttribute_notes};
+        String keys[] = {"NAME", "TITLE", "HEIGHT/WEIGHT", "RACE/SPECIALIZATION", "MISC", "STATS", "NOTES"};
+
+        for (int i = 0; i <= mAttributes.size(); ++i) {
+            LinearLayout entry = view.findViewById(resIds[i]);
+            if (resIds[i] == R.id.characterAttribute_stats) {
+                writeStatValuesToDisplay(entry);
+                continue;
+            }
+            TextView title = entry.findViewById(R.id.characterAttribute_entry_title);
+            TextView value = entry.findViewById(R.id.characterAttribute_entry_value);
+            title.setText(keys[i]);
+            value.setText(mAttributes.get(keys[i]));
+        }
+
+        return view;
+    }
+
+    private void writeStatValuesToDisplay(LinearLayout statDisplay) {
+        int resIds[] = {R.id.characterStat_str,
+                        R.id.characterStat_dex,
+                        R.id.characterStat_int,
+                        R.id.characterStat_wis,
+                        R.id.characterStat_con,
+                        R.id.characterStat_chr};
+        String stats[] = {"STR", "DEX", "INT", "WIS", "CON", "CHR"};
+
+        // Allocating stats to display panel
+        for (int i = 0; i < resIds.length; ++i) {
+            RelativeLayout stat = statDisplay.findViewById(resIds[i]);
+
+            TextView statName = stat.findViewById(R.id.characterAttribute_stat_name);
+            statName.setText(stats[i]);
+
+            TextView statValue = stat.findViewById(R.id.characterAttribute_stat_value);
+            statValue.setText(mStats.get(stats[i]));
+        }
     }
 
     @Override

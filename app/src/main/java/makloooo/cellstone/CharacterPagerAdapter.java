@@ -28,11 +28,13 @@ public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         //Log.d("PagerAdapter", "Position: " + position);
+
+        // Pager returns fragments to display
         switch (position) {
-            case 0: return CharacterAttributesFragment.newInstance(mCharacter.getAttributes());
+            case 0: return CharacterAttributesFragment.newInstance(mCharacter.getAttributes(), mCharacter.getStats());
             case 1: return CharacterLoreFragment.newInstance(mCharacter.getLoreCaptions(), mCharacter.getLoreMaterial());
-            case 2: return CharacterTriviaFragment.newInstance(mCharacter.getTriviaEntries());
-            default: return CharacterAttributesFragment.newInstance(mCharacter.getAttributes());
+            case 2: return CharacterSpeculationFragment.newInstance(mCharacter.getSpeculationEntries());
+            default: return CharacterAttributesFragment.newInstance(mCharacter.getAttributes(), mCharacter.getStats());
         }
     }
 

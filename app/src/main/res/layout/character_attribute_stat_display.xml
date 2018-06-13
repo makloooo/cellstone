@@ -1,0 +1,27 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/menuitem_shape"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/characterAttributes_textPadding"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="Status:" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1" >
+        <include layout="@layout/character_attribute_stat" android:id="@+id/characterStat_str" />
+        <include layout="@layout/character_attribute_stat" android:id="@+id/characterStat_dex" />
+        <include layout="@layout/character_attribute_stat" android:id="@+id/characterStat_int" />
+        <include layout="@layout/character_attribute_stat" android:id="@+id/characterStat_wis" />
+        <include layout="@layout/character_attribute_stat" android:id="@+id/characterStat_con" />
+        <include layout="@layout/character_attribute_stat" android:id="@+id/characterStat_chr" />
+    </LinearLayout>
+
+</LinearLayout>
