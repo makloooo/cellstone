@@ -228,6 +228,27 @@ public class MainActivity extends AppCompatActivity
                         "Arthur, said to be the mightiest of all the kings to rule Britain, is believed to have ruled sometime in the fifth or sixth century.\n" +
                                 "\n" +
                                 "The sword that is said to have proclaimed his rule was bestowed upon him by the Elemental known in legends as the Lady of the Lake. The entire episode was passed in the stories collectively known as \"King Arthur and the Knights of the Round Table.\" ");
+        gawain.addLoreEntry("Complete Wiki Entry",
+                            "Saber's True Name is Gawain (ガウェイン, Gawein?), one of the Knights of the Round Table that appeared in the Arthurian legends, also known as the White Knight of the Round Table (円卓の白騎士, Entaku no Shirokishi?).[3]\n" +
+                                    "Saber Lancelot Gawain Bedivere\n" +
+                                    "\n" +
+                                    "Artoria with Bedivere (right) Gawain (far right) and Lancelot (left).\n" +
+                                    "\n" +
+                                    "If King Arthur was the night, the symbol of the moon itself, then Sir Gawain was the day, which shoulders the sun. He acted as King Arthur's impersonator (in the kagemusha sense) in the royal castle of Camelot. In other words, he was one of the candidates to substitute the King after his fall. He is the bearer of the sister-sword to Excalibur, Excalibur Galatine. However, in his blind adoration for the King, he remained unaware of the King's agony. A loyal knight just like Sir Bedivere who took care of King Arthur in his final moments, but unlike Bedivere who wished for the King to attain happiness as a person from the bottom of his heart, Gawain wished for him to flourish as a king. Unmindful of such evaluation and intentions from those who surrounded him, Sir Gawain remained as King Arthur's right-hand to the end.[8]\n" +
+                                    "\n" +
+                                    "He never looked down on his enemies. Needless to say, he also never insults his enemies, confronting them with politeness and maintaining his fighting spirit and resolve even when the opponent lacks capacity. Remaining under the shadow of the King, he gallantly proceeds to the battlefield once the command is given and triumphs with a refreshing smile. Naturally, he was described as the ideal knight. His greatest regret was his dispute with Sir Lancelot. He was a knight who was equal to Sir Lancelot but was also incompatible with him, unable to forget that Lancelot killed his brothers, Gareth and Gaheris. With a pure personality, he was an ideal young warrior and thus his affection towards his relatives was greater than in others.\n" +
+                                    "“Sir Lancelot not only killed my brothers, that black knight even betrayed the King. Kidnapped the King's wife. How do you expect that to be forgiven?”\n" +
+                                    "\n" +
+                                    "—Gawain\n" +
+                                    "\n" +
+                                    "But in the end, King Arthur forgave Sir Lancelot; \"I was at fault for everything\". Gawain, however, never forgave Sir Lancelot's betrayal and remained hostile towards him to the end. That grudge not only cost Sir Gawain's status as a knight, but in the end even played a part in the King's ruin. Sir Gawain continued to reject Sir Lancelot when he attempted to participate in the Battle of Camlann even after being excommunicated and, consequentially, caused the death of both the King and himself.\n" +
+                                    "\n" +
+                                    "During King Arthur's final battle at the hill of Camlann, Sir Gawain died after being struck by Mordred in an old wound inflicted by Sir Lancelot. Just as King Arthur reproached himself in the hill of Camlann, Sir Gawain, too, cried in his deathbed. His passion invited the King to death. He regretted that his grudge invited the ruin of the King and accepted his enmity towards Sir Lancelot - and even Lancelot's disloyalty - as coming from his own lack of virtue. Although his ending that did not help the king in the legend, that loyalty was sincere to the very end.[8]\n" +
+                                    "“...in the chance there is a next time. If there is an opportunity to restore my honor - a second life - then at that time I will devote my everything to the king...”\n" +
+                                    "\n" +
+                                    "—Gawain\n" +
+                                    "\n" +
+                                    "Thus, he was brought back as a Heroic Spirit. From this conclusion, the Heroic Spirit Gawain seems to perceive \"being of assistance to the king\" as his absolute mission. Now set free from all doubts, Sir Gawain regained his proper figure as a literal Knight of the Sun (太陽の騎士, Taiyō no Kishi?). Having become a Servant while retaining such an oath in his heart in order to correct his mistake, the regret of his past life, Sir Gawain serves his Master as an even more perfect \"knight\". All for the sake of becoming the cornerstone of a single, lonely king.[7] ");
         gawain.setName("Gawain");
         gawain.setTitle("Knight of the Sun");
         gawain.setHeightWeight(180, 78);
