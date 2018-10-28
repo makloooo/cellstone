@@ -32,6 +32,10 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
 
+    implementation ('com.github.ChahatGupta:FadeInTextView-Android:2.1.0') {
+        exclude module: 'app'
+    }
+
     implementation "android.arch.persistence.room:runtime:1.1.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
 }

@@ -9,7 +9,7 @@ public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final String TAG = "CharacterPagerAdapter";
 
-    private static final String[] TITLES = {"Attributes", "Lore", "Trivia"};
+    private static final String[] TITLES = {"Attributes", "Lore", "Speculation"};
 
     private Character mCharacter;
 
@@ -33,7 +33,7 @@ public class CharacterPagerAdapter extends FragmentStatePagerAdapter {
         switch (position) {
             case 0: return CharacterAttributesFragment.newInstance(mCharacter.getAttributes(), mCharacter.getStats());
             case 1: return CharacterLoreFragment.newInstance(mCharacter.getLoreCaptions(), mCharacter.getLoreMaterial());
-            case 2: return CharacterSpeculationFragment.newInstance(mCharacter.getSpeculationEntries());
+            case 2: return CharacterSpeculationFragment.newInstance(mCharacter.getSpeculationEntries(), mCharacter.getCorrections());
             default: return CharacterAttributesFragment.newInstance(mCharacter.getAttributes(), mCharacter.getStats());
         }
     }

@@ -2,8 +2,10 @@ package makloooo.cellstone;
 
 import android.arch.persistence.room.Database;
 import android.content.Context;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,24 +19,31 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CharacterSpeculationFragment extends Fragment {
 
     private static final String SPECULATION = "Character Speculation";
+    private static final String CORRECTIONS = "Character Speculation Corrections";
 
     //private OnProfileInteractionListener mListener;
 
+    private LinearLayout mSpeculationListLayout;
+
     private ArrayList<String> mEntries;
+    private HashMap<Integer, String> mCorrections;
 
     public CharacterSpeculationFragment() {
         // Required empty public constructor
     }
 
-    public static CharacterSpeculationFragment newInstance(ArrayList<String> speculation) {
+    public static CharacterSpeculationFragment newInstance(ArrayList<String> speculation,
+                                                        HashMap<Integer, String> correction) {
         Log.d("CharacterSpeculationFragment", "created new CharacterSpeculationFragment");
         CharacterSpeculationFragment fragment = new CharacterSpeculationFragment();
         Bundle args = new Bundle();
         args.putStringArrayList(SPECULATION, speculation);
+        args.putSerializable(CORRECTIONS, correction);
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,6 +53,7 @@ public class CharacterSpeculationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mEntries = getArguments().getStringArrayList(SPECULATION);
+            mCorrections = (HashMap<Integer, String>)getArguments().getSerializable(CORRECTIONS);
         }
     }
 
@@ -53,37 +63,51 @@ public class CharacterSpeculationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_character_speculations, container, false);
 
-        LinearLayout speculationList = view.findViewById(R.id.characterSpeculations_entries);
+        mSpeculationListLayout = view.findViewById(R.id.characterSpeculations_entries);
 
-        // Dynamically construct relative layouts for each entry
-        LinearLayout bulletPoint;
-        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
-                LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        //llp.gravity = Gravity.CENTER_VERTICAL;
+        for (int i = 0; i < mEntries.size(); ++i) {
 
-        ImageView entryBullet;
-        TextView entryText;
+            TextView entryText = generateBulletPoint(R.drawable.ic_keyboard_arrow_right_black_24dp,
+                    mEntries.get(i));
 
-        for (String entry : mEntries) {
-            bulletPoint = new LinearLayout(getContext());
-            bulletPoint.setLayoutParams(llp);
-            bulletPoint.setOrientation(LinearLayout.HORIZONTAL);
-
-            entryBullet = new ImageView(getContext());
-            entryBullet.setPadding(8,8,8,8);
-            entryBullet.setImageResource(R.drawable.ic_keyboard_arrow_right_black_24dp);
-
-            entryText = new TextView(getContext());
-            entryText.setPadding(8,8,8,8);
-            entryText.setText(entry);
-
-            bulletPoint.addView(entryBullet, 0, llp);
-            bulletPoint.addView(entryText,1, llp);
-
-            speculationList.addView(bulletPoint);
+            // if there's a correction to this point
+            if (mCorrections.containsKey(i)) {
+                // strikeout original text
+                entryText.setPaintFlags(entryText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                // place correction under original text
+                generateBulletPoint(0, mCorrections.get(i));
+            }
         }
 
         return view;
+    }
+
+    // returns the textview
+    private TextView generateBulletPoint(int bpResId, String text) {
+        LinearLayout bulletPoint = new LinearLayout(getContext());
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
+                LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bulletPoint.setLayoutParams(llp);
+        bulletPoint.setOrientation(LinearLayout.HORIZONTAL);
+
+        ImageView entryBullet = new ImageView(getContext());
+        if (bpResId != 0) {
+            entryBullet.setPadding(8, 8, 8, 8);
+            entryBullet.setImageResource(bpResId);
+        }
+        // keep correction closer to original text
+        else entryBullet.setPadding(8,0,8,8);
+
+        TextView entryText = new TextView(getContext());
+        entryText.setPadding(8,8,8,8);
+        entryText.setText(text);
+
+        bulletPoint.addView(entryBullet, 0, llp);
+        bulletPoint.addView(entryText,1, llp);
+
+        mSpeculationListLayout.addView(bulletPoint);
+
+        return entryText;
     }
 
     @Override

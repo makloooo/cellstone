@@ -23,6 +23,9 @@ public class Character {
     private ArrayList<String> loreMaterial;
 
     private ArrayList<String> speculation;
+    private HashMap<Integer, String> corrections;
+
+    private String mCommentary;
 
     Character(String name, int resId, String description) {
         this.name = name;
@@ -32,6 +35,7 @@ public class Character {
         this.loreCaptions = new ArrayList<>();
         this.loreMaterial = new ArrayList<>();
         this.speculation = new ArrayList<>();
+        this.corrections = new HashMap<>();
     }
 
     private void initAttributes() {
@@ -66,12 +70,19 @@ public class Character {
         }
     }
     public void setNotes(String notes) { attributes.put("NOTES", notes); }
+    public void setCommentary(String commentary) {
+        mCommentary = commentary;
+    }
 
     public void addLoreEntry(String caption, String material) {
         loreCaptions.add(caption);
         loreMaterial.add(material);
     }
     public void addSpeculationEntry(String entry) { speculation.add(entry); }
+    public void addCorrection(int index, String correction) {
+        //if (index >= speculation.size()) { return; }
+        corrections.put(index, correction);
+    }
 
     public String getName() { return attributes.get("NAME"); }
     public int getPortraitId() { return portraitId; }
@@ -81,6 +92,12 @@ public class Character {
 
     public ArrayList<String> getLoreCaptions() { return loreCaptions; }
     public ArrayList<String> getLoreMaterial() { return loreMaterial; }
+
     public ArrayList<String> getSpeculationEntries() { return speculation; }
+    public HashMap<Integer,String> getCorrections() { return corrections; }
+
+    public String getCommentary() {
+        return mCommentary;
+    }
 }
 

@@ -21,7 +21,8 @@ public class MainActivity extends AppCompatActivity
                CharacterPagerFragment.OnProfileInteractionListener,
                OnEntrySelectedListener,
                ImageDisplayFragment.OnImageInteractionListener,
-               MaterialDisplayFragment.OnMaterialDisplayListener {
+               MaterialDisplayFragment.OnMaterialDisplayListener,
+               CallFragment.OnCallInteractionListener {
 
     ArrayList<Faction> mFactionList;
     Faction mCurrentFaction;
@@ -120,6 +121,7 @@ public class MainActivity extends AppCompatActivity
         return mFragmentManager;
     }
 
+    /* Display Fragment Interactions */
     public void displayMaterial(String title, final String material) {
         String combinedMaterialText = title + "\n\n" + material;
 
@@ -135,6 +137,25 @@ public class MainActivity extends AppCompatActivity
     public void clearMaterialDisplay() {
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         fragmentTransaction.remove(mFragmentManager.findFragmentByTag("MaterialDisplay"));
+        mFragmentManager.popBackStack();
+        fragmentTransaction.commit();
+    }
+
+    /* Call Fragment Interactions */
+    public void displayCommentary() {
+        // start call fragment
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        CallFragment callFragment = CallFragment
+                .newInstance(mCurrentCharacter.getCommentary(), R.drawable.sample_silhouette);
+
+        fragmentTransaction.add(R.id.main_container, callFragment, "CommentaryDisplay");
+        fragmentTransaction.addToBackStack("CommentaryDisplay");
+        fragmentTransaction.commit();
+    }
+
+    public void clearCommentary() {
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        fragmentTransaction.remove(mFragmentManager.findFragmentByTag("CommentaryDisplay"));
         mFragmentManager.popBackStack();
         fragmentTransaction.commit();
     }
@@ -263,6 +284,10 @@ public class MainActivity extends AppCompatActivity
         gawain.addSpeculationEntry("If King Arthur was the night, the symbol of the moon itself, then Sir Gawain was the day, which shoulders the sun. He acted as King Arthur's impersonator (in the kagemusha sense) in the royal castle of Camelot. In other words, he was one of the candidates to substitute the King after his fall. He is the bearer of the sister-sword to Excalibur, Excalibur Galatine. However, in his blind adoration for the King, he remained unaware of the King's agony. A loyal knight just like Sir Bedivere who took care of King Arthur in his final moments, but unlike Bedivere who wished for the King to attain happiness as a person from the bottom of his heart, Gawain wished for him to flourish as a king. Unmindful of such evaluation and intentions from those who surrounded him, Sir Gawain remained as King Arthur's right-hand to the end.[8]\n" +
                 "\n" +
                 "He never looked down on his enemies. Needless to say, he also never insults his enemies, confronting them with politeness and maintaining his fighting spirit and resolve even when the opponent lacks capacity. Remaining under the shadow of the King, he gallantly proceeds to the battlefield once the command is given and triumphs with a refreshing smile. Naturally, he was described as the ideal knight. His greatest regret was his dispute with Sir Lancelot. He was a knight who was equal to Sir Lancelot but was also incompatible with him, unable to forget that Lancelot killed his brothers, Gareth and Gaheris. With a pure personality, he was an ideal young warrior and thus his affection towards his relatives was greater than in others. ");
+
+        gawain.addCorrection(1, "This is actually correct");
+
+        gawain.setCommentary("He's a knight all around, but all he knows is how to make mashed potatoes... I can't believe the knight of the sun is such an idiot despite his legend!");
     }
 
     public void loadImage(int resId) {

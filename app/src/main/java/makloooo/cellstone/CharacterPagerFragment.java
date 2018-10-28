@@ -8,7 +8,9 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,15 @@ public class CharacterPagerFragment extends Fragment {
         tabStrip.setDistributeEvenly(true);
         tabStrip.setViewPager(pager);
 
+        // setting up call button interaction
+        ImageButton callButton = view.findViewById(R.id.call_button);
+        callButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.displayCommentary();
+            }
+        });
+
         return view;
     }
 
@@ -82,5 +93,6 @@ public class CharacterPagerFragment extends Fragment {
     public interface OnProfileInteractionListener {
         Character fetchCharacter();
         FragmentManager fetchFragmentManager();
+        void displayCommentary();
     }
 }
